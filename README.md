@@ -1,46 +1,95 @@
-# Getting Started with Create React App
+# Cryptocurrency Price Tracker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A real-time cryptocurrency tracking application built with React, Redux, TypeScript, and Tailwind CSS. This application displays cryptocurrency data with responsive design and features dynamic price updates with visual indicators.
 
-## Available Scripts
+![Sample Output](Sample output.png)
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- **Real-time Price Updates**: Live price simulation with 1.5-second update intervals
+- **Responsive Design**: Optimized for both mobile and desktop viewing experiences
+- **Sorting & Filtering**: Sort cryptocurrencies by various metrics and filter by performance
+- **Data Visualization**: Price trend sparklines and color-coded price movements
+- **Persistent User Preferences**: Saves user's sort and filter preferences across sessions
+- **Animated UI Elements**: Visual feedback for changing values using Framer Motion
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Tech Stack
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- **Frontend Framework**: React with TypeScript
+- **State Management**: Redux with Redux Toolkit
+- **Styling**: Tailwind CSS
+- **Animations**: Framer Motion
+- **Build Tool**: Create React App
 
-### `npm test`
+## Installation Guide
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Prerequisites
 
-### `npm run build`
+- Node.js (version 14.x or later)
+- npm or yarn
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Steps to Install
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. **Clone the repository**
+   ```
+   git clone [repository-url]
+   cd xivtech-assignmnet
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. **Install dependencies**
+   ```
+   npm install
+   # or
+   yarn install
+   ```
 
-### `npm run eject`
+3. **Start the development server**
+   ```
+   npm start
+   # or
+   yarn start
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+4. **Open the application**
+   
+   The application will be available at [http://localhost:3000](http://localhost:3000)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Building for Production
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```
+npm run build
+# or
+yarn build
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+The build artifacts will be stored in the `build/` directory, ready for deployment.
 
-## Learn More
+## Project Structure
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- `src/app/store.ts` - Redux store configuration
+- `src/components/` - React components
+  - `CryptoTable.tsx` - Main component for displaying cryptocurrency data
+  - `Header.tsx` - Application header component
+  - `ConnectionSimulator.tsx` - Simulates network activity
+- `src/features/cryptoSlice.ts` - Redux slice for cryptocurrency data
+- `src/types/crypto.ts` - TypeScript type definitions
+- `src/utils/` - Utility functions
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Key Implementation Details
+
+- **Responsive Design**: The application automatically switches between a table view (desktop) and a card view (mobile) based on screen size.
+- **State Management**: Redux is used to manage the crypto asset data, with simulated price updates.
+- **User Experience**: Animations and color coding provide clear visual feedback on price movements.
+- **Data Persistence**: User preferences for sorting and filtering are saved to localStorage.
+
+## Testing
+
+The project includes unit tests for components and reducers. Run the tests with:
+
+```
+npm test
+# or
+yarn test
+```
+
+
