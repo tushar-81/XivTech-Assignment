@@ -2,7 +2,7 @@
 
 A real-time cryptocurrency tracking application built with React, Redux, TypeScript, and Tailwind CSS. This application displays cryptocurrency data with responsive design and features dynamic price updates with visual indicators.
 
-![Sample Output](Sample output.png)
+![Sample Output](Sample%20output.gif)
 
 ## Features
 
