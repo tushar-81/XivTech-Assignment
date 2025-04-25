@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CryptoAsset, CryptoState } from '../types/crypto';
 
-// Helper function for generating random percentage changes
+
 const getRandomPercentChange = (min: number, max: number): number => {
   return parseFloat((Math.random() * (max - min) + min).toFixed(2));
 };
 
-// Mock data for our initial crypto assets
+
 const initialMockData: CryptoAsset[] = [
   {
     id: 1,
@@ -113,7 +113,7 @@ const initialState: CryptoState = {
   connectionStatus: 'connected'
 };
 
-// Helper function to update sparkline data
+
 const updateSparklineData = (data: number[], newValue: number): number[] => {
   const newData = [...data.slice(1), newValue];
   return newData;
@@ -125,23 +125,23 @@ const cryptoSlice = createSlice({
   reducers: {
     updatePrices: (state) => {
       state.assets = state.assets.map(asset => {
-        // Generate random price changes
+        
         const priceChangePercent = getRandomPercentChange(-2, 2) / 100;
         const newPrice = parseFloat((asset.price * (1 + priceChangePercent)).toFixed(2));
         
-        // Generate random percentage changes
+        
         const newPercentChange1h = parseFloat((asset.percentChange1h + getRandomPercentChange(-0.5, 0.5)).toFixed(2));
         const newPercentChange24h = parseFloat((asset.percentChange24h + getRandomPercentChange(-0.2, 0.2)).toFixed(2));
         const newPercentChange7d = parseFloat((asset.percentChange7d + getRandomPercentChange(-0.1, 0.1)).toFixed(2));
         
-        // Update volume with random change
+        
         const volumeChangePercent = getRandomPercentChange(-5, 5) / 100;
         const newVolume = parseFloat((asset.volume24h * (1 + volumeChangePercent)).toFixed(0));
         
-        // Update market cap based on new price
+        
         const newMarketCap = newPrice * asset.circulatingSupply;
         
-        // Update sparkline data
+        
         const newSparklineData = updateSparklineData(asset.sparklineData, newPrice);
         
         return {

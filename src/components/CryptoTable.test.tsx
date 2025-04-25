@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from '../utils/test-utils';
 import CryptoTable from '../components/CryptoTable';
 import { CryptoState } from '../types/crypto';
 
-// Mock localStorage
+
 const localStorageMock = (function() {
   let store: Record<string, string> = {};
   return {
@@ -24,7 +24,7 @@ const localStorageMock = (function() {
 
 Object.defineProperty(window, 'localStorage', { value: localStorageMock });
 
-// Mock ResizeObserver which framer-motion uses
+
 window.ResizeObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
   unobserve: jest.fn(),
@@ -91,12 +91,12 @@ describe('CryptoTable Component', () => {
     });
     
     const rows = screen.getAllByRole('row');
-    // Header row + 2 asset rows
+  
     expect(rows.length).toBe(3);
     
-    // First row should be Bitcoin (rank 1)
+   
     expect(rows[1]).toHaveTextContent('Bitcoin');
-    // Second row should be Ethereum (rank 2)
+    
     expect(rows[2]).toHaveTextContent('Ethereum');
   });
 
@@ -105,11 +105,10 @@ describe('CryptoTable Component', () => {
       preloadedState: { crypto: mockState }
     });
     
-    // Click on rank header to toggle sort direction
+    
     fireEvent.click(screen.getByText('#'));
     
-    // Since rank was already sorted asc, it should switch to desc
-    // This would place Ethereum (rank 2) first
+    
     const rows = screen.getAllByRole('row');
     expect(rows[1]).toHaveTextContent('Ethereum');
     expect(rows[2]).toHaveTextContent('Bitcoin');
@@ -120,12 +119,12 @@ describe('CryptoTable Component', () => {
       preloadedState: { crypto: mockState }
     });
     
-    // Click on top gainers filter
+    
     fireEvent.click(screen.getByText('Top Gainers'));
     
-    // Should only show Bitcoin which has positive 24h change
+    
     const rows = screen.getAllByRole('row');
-    expect(rows.length).toBe(2); // Header + 1 asset row
+    expect(rows.length).toBe(2);
     expect(rows[1]).toHaveTextContent('Bitcoin');
     expect(screen.queryByText('Ethereum')).not.toBeInTheDocument();
   });
@@ -135,12 +134,12 @@ describe('CryptoTable Component', () => {
       preloadedState: { crypto: mockState }
     });
     
-    // Click on top losers filter
+    
     fireEvent.click(screen.getByText('Top Losers'));
     
-    // Should only show Ethereum which has negative 24h change
+   
     const rows = screen.getAllByRole('row');
-    expect(rows.length).toBe(2); // Header + 1 asset row
+    expect(rows.length).toBe(2);
     expect(rows[1]).toHaveTextContent('Ethereum');
     expect(screen.queryByText('Bitcoin')).not.toBeInTheDocument();
   });
@@ -150,10 +149,10 @@ describe('CryptoTable Component', () => {
       preloadedState: { crypto: mockState }
     });
     
-    // Click on price to sort by price
+ 
     fireEvent.click(screen.getByText('Price'));
     
-    // Check localStorage was updated
+   
     expect(localStorage.getItem('crypto_sort_key')).toBe('price');
     expect(localStorage.getItem('crypto_sort_direction')).toBe('desc');
   });

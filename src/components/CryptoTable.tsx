@@ -4,14 +4,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { RootState } from '../app/store';
 import { updatePrices } from '../features/cryptoSlice';
 
-// Sort options for table columns
+
 type SortKey = 'rank' | 'price' | 'percentChange1h' | 'percentChange24h' | 'percentChange7d' | 'marketCap' | 'volume24h';
 type SortDirection = 'asc' | 'desc';
 
-// Filter options
+
 type FilterOption = 'all' | 'topGainers' | 'topLosers';
 
-// Local storage keys
+
 const STORAGE_KEY_SORT = 'crypto_sort_key';
 const STORAGE_KEY_DIRECTION = 'crypto_sort_direction';
 const STORAGE_KEY_FILTER = 'crypto_filter_option';
@@ -22,7 +22,7 @@ const CryptoTable: React.FC = () => {
   const [prevValues, setPrevValues] = useState<Record<string, Record<string, number>>>({});
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
   
-  // Initialize state with values from localStorage or defaults
+  
   const [sortKey, setSortKey] = useState<SortKey>(() => {
     const saved = localStorage.getItem(STORAGE_KEY_SORT);
     return (saved as SortKey) || 'rank';
@@ -38,7 +38,7 @@ const CryptoTable: React.FC = () => {
     return (saved as FilterOption) || 'all';
   });
 
-  // Save preferences to localStorage when they change
+ 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY_SORT, sortKey);
   }, [sortKey]);
@@ -51,16 +51,16 @@ const CryptoTable: React.FC = () => {
     localStorage.setItem(STORAGE_KEY_FILTER, filterOption);
   }, [filterOption]);
 
-  // Set up interval for price updates
+  
   useEffect(() => {
     const intervalId = setInterval(() => {
       dispatch(updatePrices());
-    }, 1500); // Update every 1.5 seconds
+    }, 1500); 
 
     return () => clearInterval(intervalId);
   }, [dispatch]);
 
-  // Filter the assets based on the current filter option
+  
   const filteredAssets = assets.filter((asset) => {
     if (filterOption === 'all') return true;
     if (filterOption === 'topGainers') return asset.percentChange24h > 0;
@@ -68,7 +68,7 @@ const CryptoTable: React.FC = () => {
     return true;
   });
 
-  // Sort the assets based on current sort settings
+  
   const sortedAssets = [...filteredAssets].sort((a, b) => {
     let aValue: number = a[sortKey];
     let bValue: number = b[sortKey];
@@ -80,24 +80,24 @@ const CryptoTable: React.FC = () => {
     }
   });
 
-  // Handle sort change
+  
   const handleSort = (key: SortKey) => {
     if (sortKey === key) {
-      // Toggle direction if same key is clicked
+      
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
     } else {
-      // Set new key and default to descending for most values (except rank)
+      
       setSortKey(key);
       setSortDirection(key === 'rank' ? 'asc' : 'desc');
     }
   };
 
-  // Handle filter change
+  
   const handleFilterChange = (filter: FilterOption) => {
     setFilterOption(filter);
   };
 
-  // Get sort icon/indicator
+  
   const getSortIndicator = (key: SortKey) => {
     if (sortKey !== key) return null;
     
@@ -108,7 +108,7 @@ const CryptoTable: React.FC = () => {
     );
   };
 
-  // Track previous values for animation
+  
   useEffect(() => {
     const newPrevValues: Record<string, Record<string, number>> = {};
     
@@ -125,7 +125,7 @@ const CryptoTable: React.FC = () => {
     setPrevValues(newPrevValues);
   }, [assets]);
 
-  // Check for mobile/desktop size
+  
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -135,12 +135,12 @@ const CryptoTable: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Format large numbers with commas
+  
   const formatNumber = (num: number): string => {
     return num.toLocaleString('en-US');
   };
 
-  // Format currency values
+  
   const formatCurrency = (num: number): string => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -150,25 +150,25 @@ const CryptoTable: React.FC = () => {
     }).format(num);
   };
 
-  // Check if a value has changed
+  
   const hasValueChanged = (assetId: number, key: string): boolean => {
     if (!prevValues[assetId]) return false;
     return prevValues[assetId][key] !== assets.find(a => a.id === assetId)?.[key];
   };
 
-  // Generate a simple sparkline SVG
+  
   const generateSparkline = (data: number[]): string => {
     const min = Math.min(...data);
     const max = Math.max(...data);
     const range = max - min || 1;
     
-    // Normalize data to 0-30 range for height
+   
     const normalized = data.map(val => 30 - ((val - min) / range) * 30);
     
-    // Create points for SVG path
+   
     const points = normalized.map((val, i) => `${i * 15},${val}`).join(' ');
     
-    // Determine color based on trend
+  
     const color = data[data.length - 1] >= data[0] ? '#10B981' : '#EF4444';
     
     return `<svg width="${isMobile ? '80' : '120'}" height="40" xmlns="http://www.w3.org/2000/svg">
@@ -176,7 +176,6 @@ const CryptoTable: React.FC = () => {
     </svg>`;
   };
 
-  // Render filter buttons
   const renderFilterButtons = () => (
     <div className="flex items-center space-x-4 mb-4">
       <span className="text-sm text-gray-600 font-medium">Filter:</span>
@@ -203,7 +202,7 @@ const CryptoTable: React.FC = () => {
     </div>
   );
 
-  // Mobile view: Card-based layout
+
   if (isMobile) {
     return (
       <div className="space-y-4">
@@ -342,7 +341,7 @@ const CryptoTable: React.FC = () => {
     );
   }
 
-  // Desktop view: Table layout
+ 
   return (
     <div>
       {renderFilterButtons()}

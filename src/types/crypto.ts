@@ -13,7 +13,7 @@ export interface CryptoAsset {
   circulatingSupply: number;
   sparklineData: number[];
   lastUpdated: number;
-  [key: string]: number | string | number[]; // Adding index signature to allow string indexing
+  [key: string]: number | string | number[]; 
 }
 
 export interface CryptoState {
